@@ -19,4 +19,12 @@
     exit(EXIT_FAILURE);                                                        \
   }
 
+#define ASSERT_FALSE(got)                                                       \
+  if (got) {                                                                  \
+    fprintf(stderr,                                                            \
+            "Assert fail at Line %d. Expected to be false but got true.\n",    \
+            __LINE__);                                                         \
+    exit(EXIT_FAILURE);                                                        \
+  }
+
 #endif // TEST_H
