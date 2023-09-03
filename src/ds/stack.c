@@ -26,7 +26,6 @@ Stack *stack_new() {
 
 bool stack_push(Stack *stack, int value) {
   Node *new_node = malloc(sizeof(Node));
-
   if (new_node == NULL)
     return false;
 
@@ -41,13 +40,13 @@ bool stack_push(Stack *stack, int value) {
 }
 
 int stack_peek(Stack *stack) {
-  if (stack->head == NULL)
+  if (stack->len == 0)
     return STACK_EMPTY;
   return stack->head->value;
 }
 
 int stack_pop(Stack *stack) {
-  if (stack->head == NULL)
+  if (stack->len == 0)
     return STACK_EMPTY;
 
   Node *nextHead = stack->head;

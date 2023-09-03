@@ -3,7 +3,6 @@
 
 typedef struct myNode {
   int value;
-  struct myNode *prev;
   struct myNode *next;
 } Node;
 
@@ -14,7 +13,7 @@ typedef struct myQueue {
 } Queue;
 
 int queue_len(Queue *q) {
-  if (q == NULL)
+  if (!q)
     return 0;
   return q->len;
 }
@@ -30,32 +29,34 @@ bool enqueue(Queue *q, int value) {
   if (node == NULL)
     return false;
 
-  q->len++;
+  node->value = value;
 
-  if (q->head == NULL && q->tail == NULL) {
+  if (q->len == 0) {
+    q->len++;
     q->head = node;
     q->tail = node;
 
     return true;
   }
 
-  Node *tmp = q->tail;
-  node->value = value;
-  node->next = tmp;
+  q->len++;
 
-  tmp->prev = node;
+  Node *tmp = q->tail;
+  tmp->next = node;
   q->tail = node;
 
   return true;
 }
 
 int dequeue(Queue *q) {
-  if (q->head == NULL)
+  if (q->len == 0)
     return QUEUE_EMPTY;
+
+  q->len--;
 
   Node *tmp = q->head;
   int value = tmp->value;
-  q->head = tmp->prev;
+  q->head = tmp->next;
 
   free(tmp);
 
@@ -63,13 +64,15 @@ int dequeue(Queue *q) {
 }
 
 int queue_head(Queue *q) {
-  if (q->head == NULL)
+  if (q->len == 0) {
     return QUEUE_EMPTY;
+  }
+
   return q->head->value;
 }
 
 int queue_tail(Queue *q) {
-  if (q->tail == NULL)
+  if (q->len == 0)
     return QUEUE_EMPTY;
   return q->tail->value;
 }

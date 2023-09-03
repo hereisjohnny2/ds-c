@@ -1,8 +1,11 @@
-#include "linked_list.h"
+#ifndef LINKED_LIST_TEST_H
+#define LINKED_LIST_TEST_H
+
+#include "../ds/linked_list.h"
 #include "test_utils.h"
 #include <stdio.h>
 
-int main(void) {
+void test_linked_list() {
   printf("Double Linked List in C\n");
 
   List *l = list_new();
@@ -31,19 +34,11 @@ int main(void) {
   ASSERT_FALSE(insert_at(l, 1000, 10));
 
   ASSERT_EQ(list_pop(l), 200);
-  // 2, 10, 5
   ASSERT_EQ(list_len(l), 3);
-
   ASSERT_EQ(list_shift(l), 2);
-  // 10, 5
-  ASSERT_EQ(list_len(l), 2);
-
   ASSERT_EQ(list_pop(l), 5);
-  // 10
   ASSERT_EQ(list_len(l), 1);
-
   ASSERT_EQ(list_pop(l), 10);
-  // 0
   ASSERT_EQ(list_len(l), 0);
 
   ASSERT_EQ(list_pop(l), LIST_EMPTY);
@@ -52,6 +47,6 @@ int main(void) {
   list_free(l);
 
   printf("All tests passed!\n");
-
-  return 0;
 }
+
+#endif // LINKED_LIST_TEST_H

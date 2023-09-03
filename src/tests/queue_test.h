@@ -1,9 +1,12 @@
-#include "queue.h"
+#ifndef QUEUE_TEST_H
+#define QUEUE_TEST_H
+
+#include "../ds/queue.h"
 #include "test_utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void) {
+void test_queue() {
   printf("Queue in C\n");
 
   Queue *q = queue_new();
@@ -34,6 +37,6 @@ int main(void) {
   queue_free(q);
 
   printf("All tests passed!\n");
-
-  return 0;
 }
+
+#endif // QUEUE_TEST_H

@@ -1,9 +1,12 @@
-#include "stack.h"
+#ifndef STACK_TEST_H
+#define STACK_TEST_H
+
+#include "../ds/stack.h"
 #include "test_utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void) {
+void test_stack() {
   printf("Stack in C\n");
 
   Stack *s = stack_new();
@@ -22,6 +25,6 @@ int main(void) {
   stack_free(s);
 
   printf("All tests passed!\n");
-
-  return 0;
 }
+
+#endif // STACK_TEST_H
