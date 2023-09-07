@@ -6,7 +6,8 @@ project "dsc-lib"
     language "C"
     targetdir "bin/%{cfg.buildcfg}"
 
-    files { "./src/ds/**.h", "./src/ds/**.c" }
+    files { "./src/ds/**.h", "./src/ds/**.c",
+            "./src/algo/**.h", "./src/algo/**.c" }
 
     filter "configurations:Debug"
         defines { "DEBUG" }
