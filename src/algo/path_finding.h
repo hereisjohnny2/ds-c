@@ -8,8 +8,9 @@ typedef struct {
   int x, y;
 } Point;
 
-void print_maze(size_t maze_rows, size_t maze_columns, char **maze, int **path);
-void maze_solver(size_t maze_rows, size_t maze_columns, char **maze, char wall,
-                 bool **seen, Point start, Point end, int **path);
+void print_maze(size_t maze_rows, size_t maze_columns, char **maze,
+                bool **path);
+bool **maze_solver(size_t maze_rows, size_t maze_columns, char **maze, char wall,
+                 Point start, Point end);
 
 #endif // PATH_FINDING_H

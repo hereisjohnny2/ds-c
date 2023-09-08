@@ -1,8 +1,9 @@
 #include "../algo/path_finding.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 
-void test_path_finding(char **maze) {
+void test_path_finding(size_t maze_rows, size_t maze_columns, char **maze) {
   printf("Maze Solver in C\n");
   Point start = {
       .x = 10,
@@ -14,19 +15,14 @@ void test_path_finding(char **maze) {
       .y = 5,
   };
 
-  bool **seen = (bool **)malloc(6 * sizeof(bool *));
-  for (int i = 0; i < 6; i++) {
-    seen[i] = (bool *)malloc(12 * sizeof(bool));
-  }
-
-  int **path = (int **)malloc(6 * sizeof(int *));
-  for (int i = 0; i < 6; i++) {
-    path[i] = (int *)malloc(12 * sizeof(int));
-  }
-
   printf("Before: \n");
-  print_maze(6, 12, maze, path);
-  maze_solver(6, 12, maze, 'X', seen, start, end, path);
+  print_maze(maze_rows, maze_columns, maze, NULL);
+  bool **path = maze_solver(maze_rows, maze_columns, maze, 'X', start, end);
   printf("After: \n");
-  print_maze(6, 12, maze, path);
+  print_maze(maze_rows, maze_columns, maze, path);
+
+  for (int i = 0; i < maze_rows; i++) {
+    free(path[i]);
+  }
+  free(path);
 }
