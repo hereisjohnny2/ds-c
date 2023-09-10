@@ -4,5 +4,6 @@
 #include <stddef.h>
 
 void bubble_sort(size_t size, int *src);
+void quick_sort(size_t size, int *src);
 
 #endif // SORT_H
