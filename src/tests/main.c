@@ -1,9 +1,4 @@
-#include "linked_list_test.h"
-#include "path_finding_test.h"
-#include "queue_test.h"
-#include "search_test.h"
-#include "sort_test.h"
-#include "stack_test.h"
+#include "tests.h"
 #include <stdio.h>
 
 int main() {
@@ -11,9 +6,13 @@ int main() {
   test_linked_list();
   test_queue();
   test_stack();
-  printf("\nAlgorithms ==============================================\n");
-  test_search();
-  test_sort();
+
+  printf("\nAlgorithms ============================================\n");
+  test_binary_search();
+  test_linear_search();
+  test_quick_sort();
+  test_bubble_sort();
+
   char *maze[] = {
       "XXXXXXXXXX X", "X        X X", "X        X X",
       "X XXXXXXXX X", "X          X", "X XXXXXXXXXX",
