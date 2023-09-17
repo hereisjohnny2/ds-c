@@ -6,11 +6,13 @@
 #include "../ds/linked_list.h"
 #include "../ds/queue.h"
 #include "../ds/stack.h"
+#include "../ds/tree.h"
 
 #include "../algo/array_utils.h"
 #include "test_utils.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 void test_linked_list() {
   printf("Double Linked List in C");
@@ -177,6 +179,47 @@ void test_stack() {
   ASSERT_EQ(stack_pop(s), STACK_EMPTY);
 
   stack_free(s);
+
+  printf(" (OK)\n");
+}
+
+bool test_tree_order_case(TreeNode *node, TREE_ORDER order, int *arr) {
+  List *path = list_new();
+  List *expected = list_from_array(7, arr);
+  tree_order(node, path, order);
+  return list_equal(expected, path);
+}
+
+void test_tree_order(TreeNode *head) {
+  int arr_pre[] = {7, 10, 20, 55, 3, 9, 12};
+  ASSERT_TRUE(test_tree_order_case(head, TREE_PRE, arr_pre));
+  int arr_in[] = {20, 10, 55, 7, 9, 3, 12};
+  ASSERT_TRUE(test_tree_order_case(head, TREE_IN, arr_in));
+  int arr_pos[] = {20, 55, 10, 9, 12, 3, 7};
+  ASSERT_TRUE(test_tree_order_case(head, TREE_POS, arr_pos));
+}
+
+void test_tree() {
+  printf("Trees in C");
+
+  TreeNode *head = tree_node_new(7);
+  TreeNode *n1 = tree_node_new(10);
+  TreeNode *n2 = tree_node_new(3);
+  TreeNode *n3 = tree_node_new(20);
+  TreeNode *n4 = tree_node_new(55);
+  TreeNode *n5 = tree_node_new(9);
+  TreeNode *n6 = tree_node_new(12);
+
+  ASSERT_TRUE(tree_set_node(head, n1, 0));
+  ASSERT_TRUE(tree_set_node(head, n2, 1));
+
+  ASSERT_TRUE(tree_set_node(n1, n3, 0));
+  ASSERT_TRUE(tree_set_node(n1, n4, 1));
+
+  ASSERT_TRUE(tree_set_node(n2, n5, 0));
+  ASSERT_TRUE(tree_set_node(n2, n6, 1));
+
+  test_tree_order(head);
 
   printf(" (OK)\n");
 }

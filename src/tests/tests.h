@@ -6,6 +6,7 @@
 void test_linked_list();
 void test_queue();
 void test_stack();
+void test_tree();
 
 void test_path_finding(size_t maze_rows, size_t maze_columns, char **maze);
 

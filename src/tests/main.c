@@ -6,6 +6,7 @@ int main() {
   test_linked_list();
   test_queue();
   test_stack();
+  test_tree();
 
   printf("\nAlgorithms ============================================\n");
   test_binary_search();
