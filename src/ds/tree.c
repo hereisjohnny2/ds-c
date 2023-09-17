@@ -1,5 +1,7 @@
 #include "tree.h"
 #include "linked_list.h"
+#include "queue.h"
+#include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -41,9 +43,8 @@ bool tree_set_node(TreeNode *parent, TreeNode *child, int pos) {
 }
 
 void tree_order(TreeNode *curr, List *path, TREE_ORDER order) {
-  if (!curr) {
+  if (!curr)
     return;
-  }
 
   if (order == TREE_PRE)
     list_push(path, curr->value);
@@ -57,6 +58,40 @@ void tree_order(TreeNode *curr, List *path, TREE_ORDER order) {
 
   if (order == TREE_POS)
     list_push(path, curr->value);
+}
+
+bool breadth_first_search_walk(TreeNode *curr, int value, Queue *q) {
+  if (!curr || queue_len(q) < 1) {
+    return false;
+  }
+
+  if (value == dequeue(q)) {
+    return true;
+  }
+
+  if (curr->left) {
+    enqueue(q, curr->left->value);
+  }
+
+  if (curr->right) {
+    enqueue(q, curr->right->value);
+  }
+
+  if (breadth_first_search_walk(curr->left, value, q))
+    return true;
+  if (breadth_first_search_walk(curr->right, value, q))
+    return true;
+
+  return false;
+}
+
+bool breadth_first_search(TreeNode *curr, int value) {
+  if (!curr)
+    return false;
+  Queue *q = queue_new();
+  enqueue(q, curr->value);
+
+  return breadth_first_search_walk(curr, value, q);
 }
 
 void tree_free(Tree *tree) { free(tree); }

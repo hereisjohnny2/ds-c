@@ -221,5 +221,9 @@ void test_tree() {
 
   test_tree_order(head);
 
+  ASSERT_TRUE(breadth_first_search(head, 12));
+  ASSERT_FALSE(breadth_first_search(head, 100));
+  ASSERT_FALSE(breadth_first_search(NULL, 100));
+
   printf(" (OK)\n");
 }
