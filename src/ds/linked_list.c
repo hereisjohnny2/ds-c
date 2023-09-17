@@ -1,5 +1,7 @@
-#include <stdlib.h>
 #include "linked_list.h"
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct myNode {
   int value;
@@ -177,6 +179,41 @@ int list_last(List *l) {
   if (l->last == NULL)
     return LIST_EMPTY;
   return l->last->value;
+}
+
+void list_print(List *l) {
+  printf("{"); 
+  for (int i = 0; i < l->len; i++) {
+    printf("%d", list_get(l, i));
+    if (i != l->len)
+      printf(", ");
+  }
+  printf("}"); 
+}
+
+bool list_equal(List *l1, List *l2) {
+  if (!l1 || !l2)
+    return false;
+  if (l1->len != l2->len)
+    return false;
+
+  for (int i = 0; i < l1->len; i++) {
+    if (list_get(l1, i) != list_get(l2, i))
+      return false;
+  }
+
+  return true;
+}
+
+List *list_from_array(size_t size, int *arr) {
+  if (!arr || size < 0) return NULL;
+
+  List *l = list_new();
+  for (int i = 0; i < size; i++) {
+    list_push(l, arr[i]);
+  }
+
+  return l;
 }
 
 void list_free(List *l) { free(l); }
