@@ -77,12 +77,8 @@ bool breadth_first_search_walk(TreeNode *curr, int value, Queue *q) {
     enqueue(q, curr->right->value);
   }
 
-  if (breadth_first_search_walk(curr->left, value, q))
-    return true;
-  if (breadth_first_search_walk(curr->right, value, q))
-    return true;
-
-  return false;
+  return breadth_first_search_walk(curr->left, value, q) ||
+         breadth_first_search_walk(curr->right, value, q);
 }
 
 bool breadth_first_search(TreeNode *curr, int value) {
@@ -92,6 +88,22 @@ bool breadth_first_search(TreeNode *curr, int value) {
   enqueue(q, curr->value);
 
   return breadth_first_search_walk(curr, value, q);
+}
+
+bool tree_compare(TreeNode *a, TreeNode *b) {
+  // Structural Check
+  if (!a && !b)
+    return true;
+
+  // Structural Check
+  if (!a || !b)
+    return false;
+
+  // Value Check
+  if (a->value != b->value)
+    return false;
+
+  return tree_compare(a->left, b->left) && tree_compare(a->right, b->right);
 }
 
 void tree_free(Tree *tree) { free(tree); }

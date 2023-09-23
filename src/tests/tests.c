@@ -199,6 +199,33 @@ void test_tree_order(TreeNode *head) {
   ASSERT_TRUE(test_tree_order_case(head, TREE_POS, arr_pos));
 }
 
+void test_tree_compare() {
+  TreeNode *headA = tree_node_new(7);
+  TreeNode *nA1 = tree_node_new(10);
+  TreeNode *nA2 = tree_node_new(3);
+  TreeNode *nA3 = tree_node_new(20);
+  TreeNode *nA5 = tree_node_new(9);
+
+  tree_set_node(headA, nA1, 0);
+  tree_set_node(headA, nA2, 1);
+  tree_set_node(nA1, nA3, 0);
+  tree_set_node(nA2, nA5, 1);
+
+  TreeNode *headB = tree_node_new(7);
+  TreeNode *nB1 = tree_node_new(10);
+  TreeNode *nB2 = tree_node_new(3);
+  TreeNode *nB3 = tree_node_new(16);
+  TreeNode *nB5 = tree_node_new(7);
+
+  tree_set_node(headB, nB1, 0);
+  tree_set_node(headB, nB2, 1);
+  tree_set_node(nB1, nB3, 0);
+  tree_set_node(nB2, nB5, 1);
+
+  ASSERT_TRUE(tree_compare(headA, headA));
+  ASSERT_FALSE(tree_compare(headA, headB));
+}
+
 void test_tree() {
   printf("Trees in C");
 
