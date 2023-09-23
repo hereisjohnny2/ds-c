@@ -183,74 +183,64 @@ void test_stack() {
   printf(" (OK)\n");
 }
 
-bool test_tree_order_case(TreeNode *node, TREE_ORDER order, int *arr) {
+bool test_tree_order_case(Tree *tree, TREE_ORDER order, int *arr) {
   List *path = list_new();
   List *expected = list_from_array(7, arr);
-  tree_order(node, path, order);
+  tree_order(tree, path, order);
   return list_equal(expected, path);
 }
 
-void test_tree_order(TreeNode *head) {
-  int arr_pre[] = {7, 10, 20, 55, 3, 9, 12};
-  ASSERT_TRUE(test_tree_order_case(head, TREE_PRE, arr_pre));
-  int arr_in[] = {20, 10, 55, 7, 9, 3, 12};
-  ASSERT_TRUE(test_tree_order_case(head, TREE_IN, arr_in));
-  int arr_pos[] = {20, 55, 10, 9, 12, 3, 7};
-  ASSERT_TRUE(test_tree_order_case(head, TREE_POS, arr_pos));
+void test_tree_order(Tree *tree) {
+  int arr_pre[] = {7, 3, 10, 9, 20, 12, 55};
+  ASSERT_TRUE(test_tree_order_case(tree, TREE_PRE, arr_pre));
+  int arr_in[] = {3, 7, 9, 10, 12, 20, 55};
+  ASSERT_TRUE(test_tree_order_case(tree, TREE_IN, arr_in));
+  int arr_pos[] = {3, 9, 12, 55, 20, 10, 7};
+  ASSERT_TRUE(test_tree_order_case(tree, TREE_POS, arr_pos));
 }
 
 void test_tree_compare() {
-  TreeNode *headA = tree_node_new(7);
-  TreeNode *nA1 = tree_node_new(10);
-  TreeNode *nA2 = tree_node_new(3);
-  TreeNode *nA3 = tree_node_new(20);
-  TreeNode *nA5 = tree_node_new(9);
+  Tree *treeA = tree_new();
+  bst_insert(treeA, 7);
+  bst_insert(treeA, 10);
+  bst_insert(treeA, 3);
+  bst_insert(treeA, 20);
+  bst_insert(treeA, 9);
 
-  tree_set_node(headA, nA1, 0);
-  tree_set_node(headA, nA2, 1);
-  tree_set_node(nA1, nA3, 0);
-  tree_set_node(nA2, nA5, 1);
+  Tree *treeB = tree_new();
+  bst_insert(treeB, 7);
+  bst_insert(treeB, 10);
+  bst_insert(treeB, 3);
+  bst_insert(treeB, 16);
+  bst_insert(treeB, 7);
 
-  TreeNode *headB = tree_node_new(7);
-  TreeNode *nB1 = tree_node_new(10);
-  TreeNode *nB2 = tree_node_new(3);
-  TreeNode *nB3 = tree_node_new(16);
-  TreeNode *nB5 = tree_node_new(7);
-
-  tree_set_node(headB, nB1, 0);
-  tree_set_node(headB, nB2, 1);
-  tree_set_node(nB1, nB3, 0);
-  tree_set_node(nB2, nB5, 1);
-
-  ASSERT_TRUE(tree_compare(headA, headA));
-  ASSERT_FALSE(tree_compare(headA, headB));
+  ASSERT_TRUE(tree_compare(treeA, treeA));
+  ASSERT_FALSE(tree_compare(treeA, treeB));
 }
 
 void test_tree() {
   printf("Trees in C");
 
-  TreeNode *head = tree_node_new(7);
-  TreeNode *n1 = tree_node_new(10);
-  TreeNode *n2 = tree_node_new(3);
-  TreeNode *n3 = tree_node_new(20);
-  TreeNode *n4 = tree_node_new(55);
-  TreeNode *n5 = tree_node_new(9);
-  TreeNode *n6 = tree_node_new(12);
+  Tree *tree = tree_new();
+  bst_insert(tree, 7);
+  bst_insert(tree, 10);
+  bst_insert(tree, 3);
+  bst_insert(tree, 20);
+  bst_insert(tree, 55);
+  bst_insert(tree, 9);
+  bst_insert(tree, 12);
 
-  ASSERT_TRUE(tree_set_node(head, n1, 0));
-  ASSERT_TRUE(tree_set_node(head, n2, 1));
+  test_tree_order(tree);
 
-  ASSERT_TRUE(tree_set_node(n1, n3, 0));
-  ASSERT_TRUE(tree_set_node(n1, n4, 1));
-
-  ASSERT_TRUE(tree_set_node(n2, n5, 0));
-  ASSERT_TRUE(tree_set_node(n2, n6, 1));
-
-  test_tree_order(head);
-
-  ASSERT_TRUE(breadth_first_search(head, 12));
-  ASSERT_FALSE(breadth_first_search(head, 100));
+  ASSERT_TRUE(breadth_first_search(tree, 12));
+  ASSERT_FALSE(breadth_first_search(tree, 100));
   ASSERT_FALSE(breadth_first_search(NULL, 100));
+
+  ASSERT_TRUE(bst_find(tree, 12));
+  ASSERT_FALSE(bst_find(tree, 100));
+  ASSERT_FALSE(bst_find(NULL, 100));
+
+  test_tree_compare();
 
   printf(" (OK)\n");
 }

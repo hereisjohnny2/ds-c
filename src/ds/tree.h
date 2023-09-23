@@ -15,9 +15,11 @@ typedef struct myTree Tree;
 Tree *tree_new();
 TreeNode *tree_node_new(int value);
 bool tree_set_node(TreeNode *parent, TreeNode *child, int pos);
-void tree_order(TreeNode *curr, List *path, TREE_ORDER order);
-bool breadth_first_search(TreeNode *curr, int value);
-bool tree_compare(TreeNode *a, TreeNode *b);
+void tree_order(Tree *curr, List *path, TREE_ORDER order);
+bool breadth_first_search(Tree *curr, int value);
+bool tree_compare(Tree *a, Tree *b);
+bool bst_find(Tree *node, int needle);
+void bst_insert(Tree *node, int value);
 void tree_free(Tree *tree);
 void tree_node_free(TreeNode *node);
 
