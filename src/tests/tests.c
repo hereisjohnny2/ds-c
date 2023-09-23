@@ -186,7 +186,7 @@ void test_stack() {
 bool test_tree_order_case(Tree *tree, TREE_ORDER order, int *arr) {
   List *path = list_new();
   List *expected = list_from_array(7, arr);
-  tree_order(tree, path, order);
+  depth_first_transversal(tree, path, order);
   return list_equal(expected, path);
 }
 
@@ -231,6 +231,10 @@ void test_tree() {
   bst_insert(tree, 12);
 
   test_tree_order(tree);
+
+  ASSERT_TRUE(depth_first_search(tree, 12));
+  ASSERT_FALSE(depth_first_search(tree, 100));
+  ASSERT_FALSE(depth_first_search(NULL, 100));
 
   ASSERT_TRUE(breadth_first_search(tree, 12));
   ASSERT_FALSE(breadth_first_search(tree, 100));

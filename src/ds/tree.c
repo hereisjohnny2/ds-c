@@ -13,11 +13,13 @@ typedef struct myTreeNode {
 
 typedef struct myTree {
   TreeNode *head;
+  int height;
 } Tree;
 
 Tree *tree_new() {
   Tree *t = malloc(sizeof(Tree));
   t->head = NULL;
+  t->height = 0;
   return t;
 }
 
@@ -42,48 +44,64 @@ bool tree_set_node(TreeNode *parent, TreeNode *child, int pos) {
   return true;
 }
 
-void tree_order_walk(TreeNode *curr, List *path, TREE_ORDER order) {
+void depth_first_transversal_walk(TreeNode *curr, List *path,
+                                  TREE_ORDER order) {
   if (!curr)
     return;
 
   if (order == TREE_PRE)
     list_push(path, curr->value);
 
-  tree_order_walk(curr->left, path, order);
+  depth_first_transversal_walk(curr->left, path, order);
 
   if (order == TREE_IN)
     list_push(path, curr->value);
 
-  tree_order_walk(curr->right, path, order);
+  depth_first_transversal_walk(curr->right, path, order);
 
   if (order == TREE_POS)
     list_push(path, curr->value);
 }
 
-void tree_order(Tree *tree, List *path, TREE_ORDER order) {
-  if (!tree) {
+void depth_first_transversal(Tree *tree, List *path, TREE_ORDER order) {
+  if (!tree)
     return;
-  }
 
-  tree_order_walk(tree->head, path, order);
+  depth_first_transversal_walk(tree->head, path, order);
+}
+
+bool depth_first_search_walk(TreeNode *curr, int needle) {
+  if (!curr)
+    return false;
+
+  if (curr->value == needle)
+    return true;
+
+  if (curr->value < needle)
+    return depth_first_search_walk(curr->right, needle);
+
+  return depth_first_search_walk(curr->left, needle);
+}
+
+bool depth_first_search(Tree *tree, int neddle) {
+  if (!tree)
+    return false;
+
+  return depth_first_search_walk(tree->head, neddle);
 }
 
 bool breadth_first_search_walk(TreeNode *curr, int value, Queue *q) {
-  if (!curr || queue_len(q) < 1) {
+  if (!curr || queue_len(q) < 1)
     return false;
-  }
 
-  if (value == dequeue(q)) {
+  if (value == dequeue(q))
     return true;
-  }
 
-  if (curr->left) {
+  if (curr->left)
     enqueue(q, curr->left->value);
-  }
 
-  if (curr->right) {
+  if (curr->right)
     enqueue(q, curr->right->value);
-  }
 
   return breadth_first_search_walk(curr->left, value, q) ||
          breadth_first_search_walk(curr->right, value, q);
@@ -122,6 +140,7 @@ bool tree_compare(Tree *a, Tree *b) {
 
   if (!a || !b)
     return false;
+
   return tree_compare_walk(a->head, b->head);
 }
 
@@ -169,6 +188,7 @@ void bst_insert_walk(TreeNode *node, int value) {
 void bst_insert(Tree *tree, int value) {
   if (!tree->head) {
     tree->head = tree_node_new(value);
+    tree->height++;
     return;
   }
 
