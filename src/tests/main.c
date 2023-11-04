@@ -13,12 +13,7 @@ int main() {
   test_linear_search();
   test_quick_sort();
   test_bubble_sort();
-
-  char *maze[] = {
-      "XXXXXXXXXX X", "X        X X", "X        X X",
-      "X XXXXXXXX X", "X          X", "X XXXXXXXXXX",
-  };
-  test_path_finding(6, 12, maze);
+  test_path_finding();
 
   return 0;
 }

@@ -14,7 +14,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void test_linked_list() {
+void test_linked_list()
+{
   printf("Double Linked List in C");
 
   List *l = list_new();
@@ -58,7 +59,8 @@ void test_linked_list() {
   printf(" (Ok)\n");
 }
 
-void test_queue() {
+void test_queue()
+{
   printf("Queue in C");
 
   Queue *q = queue_new();
@@ -91,8 +93,30 @@ void test_queue() {
   printf(" (OK)\n");
 }
 
-void test_path_finding(size_t maze_rows, size_t maze_columns, char **maze) {
+void test_path_finding()
+{
   printf("Maze Solver in C\n");
+
+  int maze_rows = 6, maze_columns = 12;
+
+  char *maze[] = {
+      "XXXXXXXXXX X",
+      "X        X X",
+      "X        X X",
+      "X XXXXXXXX X",
+      "X          X",
+      "X XXXXXXXXXX",
+  };
+
+  char *expected_maze[] = {
+      "XXXXXXXXXX1X",
+      "X        X1X",
+      "X        X1X",
+      "X XXXXXXXX1X",
+      "X1111111111X",
+      "X1XXXXXXXXXX",
+  };
+
   Point start = {
       .x = 10,
       .y = 0,
@@ -103,19 +127,20 @@ void test_path_finding(size_t maze_rows, size_t maze_columns, char **maze) {
       .y = 5,
   };
 
-  printf("Before: \n");
-  print_maze(maze_rows, maze_columns, maze, NULL);
   bool **path = maze_solver(maze_rows, maze_columns, maze, 'X', start, end);
-  printf("After: \n");
-  print_maze(maze_rows, maze_columns, maze, path);
+  ASSERT_MAT_EQ(maze_rows, maze_columns, maze, maze);
 
-  for (int i = 0; i < maze_rows; i++) {
+  for (int i = 0; i < maze_rows; i++)
+  {
     free(path[i]);
   }
   free(path);
+
+  printf(" (OK)\n");
 }
 
-void test_linear_search() {
+void test_linear_search()
+{
   printf("Linear Search in C");
 
   int values[] = {1, 3, 5, 7, 9, 10, 22, 45};
@@ -127,7 +152,8 @@ void test_linear_search() {
   printf(" (OK)\n");
 }
 
-void test_binary_search() {
+void test_binary_search()
+{
   printf("Binary Search in C");
 
   int values[] = {1, 3, 5, 7, 9, 10, 22, 45};
@@ -139,7 +165,8 @@ void test_binary_search() {
   printf(" (OK)\n");
 }
 
-void test_bubble_sort() {
+void test_bubble_sort()
+{
   printf("Bubble Sort Algorithms in C");
 
   // Bubble Sort with Arrays
@@ -151,7 +178,8 @@ void test_bubble_sort() {
   printf(" (OK)\n");
 }
 
-void test_quick_sort() {
+void test_quick_sort()
+{
   printf("Quick Sort Algorithms in C");
 
   int arr[] = {9, 3, 7, 4, 69, 420, 42};
@@ -162,7 +190,8 @@ void test_quick_sort() {
   printf(" (OK)\n");
 }
 
-void test_stack() {
+void test_stack()
+{
   printf("Stack in C");
 
   Stack *s = stack_new();
@@ -183,14 +212,16 @@ void test_stack() {
   printf(" (OK)\n");
 }
 
-bool test_tree_order_case(Tree *tree, TREE_ORDER order, int *arr) {
+bool test_tree_order_case(Tree *tree, TREE_ORDER order, int *arr)
+{
   List *path = list_new();
   List *expected = list_from_array(7, arr);
   depth_first_transversal(tree, path, order);
   return list_equal(expected, path);
 }
 
-void test_tree_order(Tree *tree) {
+void test_tree_order(Tree *tree)
+{
   int arr_pre[] = {7, 3, 10, 9, 20, 12, 55};
   ASSERT_TRUE(test_tree_order_case(tree, TREE_PRE, arr_pre));
   int arr_in[] = {3, 7, 9, 10, 12, 20, 55};
@@ -199,7 +230,8 @@ void test_tree_order(Tree *tree) {
   ASSERT_TRUE(test_tree_order_case(tree, TREE_POS, arr_pos));
 }
 
-void test_tree_compare() {
+void test_tree_compare()
+{
   Tree *treeA = tree_new();
   bst_insert(treeA, 7);
   bst_insert(treeA, 10);
@@ -218,7 +250,8 @@ void test_tree_compare() {
   ASSERT_FALSE(tree_compare(treeA, treeB));
 }
 
-void test_tree() {
+void test_tree()
+{
   printf("Trees in C");
 
   Tree *tree = tree_new();

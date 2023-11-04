@@ -8,11 +8,9 @@ void test_queue();
 void test_stack();
 void test_tree();
 
-void test_path_finding(size_t maze_rows, size_t maze_columns, char **maze);
-
+void test_path_finding();
 void test_linear_search();
 void test_binary_search();
-
 void test_bubble_sort();
 void test_quick_sort();
 
