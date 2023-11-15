@@ -23,3 +23,8 @@ To remove all make files and clean bin and obj folders run:
 $ tools/clean.sh
 ```
 
+It's possible to install the library after it is built:
+
+```shell
+$ tools/install.sh
+```
