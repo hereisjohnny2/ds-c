@@ -1,29 +1,37 @@
-#include "sort.h"
+#include "algo/sort.h"
 #include <stddef.h>
 #include <stdio.h>
 
-void swap(size_t a, size_t b, int *src) {
+void swap(size_t a, size_t b, int *src)
+{
   int temp = src[a];
   src[a] = src[b];
   src[b] = temp;
 }
 
-void bubble_sort(size_t size, int *src) {
-  for (int i = 0; i < size; i++) {
-    for (int j = 0; j < size - 1 - i; j++) {
-      if (src[j] > src[j + 1]) {
+void bubble_sort(size_t size, int *src)
+{
+  for (int i = 0; i < size; i++)
+  {
+    for (int j = 0; j < size - 1 - i; j++)
+    {
+      if (src[j] > src[j + 1])
+      {
         swap(j, j + 1, src);
       }
     }
   }
 }
 
-size_t partition(int low, int high, int *src) {
+size_t partition(int low, int high, int *src)
+{
   int pivot = src[high];
   int idx = low - 1;
 
-  for (int i = low; i < high; i++) {
-    if (src[i] <= pivot) {
+  for (int i = low; i < high; i++)
+  {
+    if (src[i] <= pivot)
+    {
       idx++;
       swap(i, idx, src);
     }
@@ -37,8 +45,10 @@ size_t partition(int low, int high, int *src) {
   return idx;
 }
 
-void qs(int low, int high, int *src) {
-  if (low >= high) {
+void qs(int low, int high, int *src)
+{
+  if (low >= high)
+  {
     return;
   }
 

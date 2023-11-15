@@ -1,37 +1,43 @@
 #include <stdlib.h>
-#include "queue.h"
+#include "ds/queue.h"
 
-typedef struct myNode {
+typedef struct myNode
+{
   int value;
   struct myNode *next;
 } Node;
 
-typedef struct myQueue {
+typedef struct myQueue
+{
   Node *head;
   Node *tail;
   size_t len;
 } Queue;
 
-int queue_len(Queue *q) {
+int queue_len(Queue *q)
+{
   if (!q)
     return 0;
   return q->len;
 }
 
-Queue *queue_new() {
+Queue *queue_new()
+{
   Queue *s = malloc(sizeof(Queue));
   s->len = 0;
   return s;
 }
 
-bool enqueue(Queue *q, int value) {
+bool enqueue(Queue *q, int value)
+{
   Node *node = malloc(sizeof(Node));
   if (node == NULL)
     return false;
 
   node->value = value;
 
-  if (q->len == 0) {
+  if (q->len == 0)
+  {
     q->len++;
     q->head = node;
     q->tail = node;
@@ -48,7 +54,8 @@ bool enqueue(Queue *q, int value) {
   return true;
 }
 
-int dequeue(Queue *q) {
+int dequeue(Queue *q)
+{
   if (q->len == 0)
     return QUEUE_EMPTY;
 
@@ -63,19 +70,21 @@ int dequeue(Queue *q) {
   return value;
 }
 
-int queue_head(Queue *q) {
-  if (q->len == 0) {
+int queue_head(Queue *q)
+{
+  if (q->len == 0)
+  {
     return QUEUE_EMPTY;
   }
 
   return q->head->value;
 }
 
-int queue_tail(Queue *q) {
+int queue_tail(Queue *q)
+{
   if (q->len == 0)
     return QUEUE_EMPTY;
   return q->tail->value;
 }
 
 void queue_free(Queue *q) { free(q); }
-

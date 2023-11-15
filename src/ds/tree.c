@@ -1,29 +1,33 @@
-#include "tree.h"
-#include "linked_list.h"
-#include "queue.h"
+#include "ds/tree.h"
+#include "ds/linked_list.h"
+#include "ds/queue.h"
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct myTreeNode {
+typedef struct myTreeNode
+{
   int value;
   struct myTreeNode *left;
   struct myTreeNode *right;
 } TreeNode;
 
-typedef struct myTree {
+typedef struct myTree
+{
   TreeNode *head;
   int height;
 } Tree;
 
-Tree *tree_new() {
+Tree *tree_new()
+{
   Tree *t = malloc(sizeof(Tree));
   t->head = NULL;
   t->height = 0;
   return t;
 }
 
-TreeNode *tree_node_new(int value) {
+TreeNode *tree_node_new(int value)
+{
   TreeNode *n = malloc(sizeof(TreeNode));
   n->value = value;
   n->right = NULL;
@@ -31,13 +35,17 @@ TreeNode *tree_node_new(int value) {
   return n;
 }
 
-bool tree_set_node(TreeNode *parent, TreeNode *child, int pos) {
+bool tree_set_node(TreeNode *parent, TreeNode *child, int pos)
+{
   if (!parent || !child)
     return false;
 
-  if (pos == 0) {
+  if (pos == 0)
+  {
     parent->left = child;
-  } else {
+  }
+  else
+  {
     parent->right = child;
   }
 
@@ -45,7 +53,8 @@ bool tree_set_node(TreeNode *parent, TreeNode *child, int pos) {
 }
 
 void depth_first_transversal_walk(TreeNode *curr, List *path,
-                                  TREE_ORDER order) {
+                                  TREE_ORDER order)
+{
   if (!curr)
     return;
 
@@ -63,14 +72,16 @@ void depth_first_transversal_walk(TreeNode *curr, List *path,
     list_push(path, curr->value);
 }
 
-void depth_first_transversal(Tree *tree, List *path, TREE_ORDER order) {
+void depth_first_transversal(Tree *tree, List *path, TREE_ORDER order)
+{
   if (!tree)
     return;
 
   depth_first_transversal_walk(tree->head, path, order);
 }
 
-bool depth_first_search_walk(TreeNode *curr, int needle) {
+bool depth_first_search_walk(TreeNode *curr, int needle)
+{
   if (!curr)
     return false;
 
@@ -83,14 +94,16 @@ bool depth_first_search_walk(TreeNode *curr, int needle) {
   return depth_first_search_walk(curr->left, needle);
 }
 
-bool depth_first_search(Tree *tree, int neddle) {
+bool depth_first_search(Tree *tree, int neddle)
+{
   if (!tree)
     return false;
 
   return depth_first_search_walk(tree->head, neddle);
 }
 
-bool breadth_first_search_walk(TreeNode *curr, int value, Queue *q) {
+bool breadth_first_search_walk(TreeNode *curr, int value, Queue *q)
+{
   if (!curr || queue_len(q) < 1)
     return false;
 
@@ -107,7 +120,8 @@ bool breadth_first_search_walk(TreeNode *curr, int value, Queue *q) {
          breadth_first_search_walk(curr->right, value, q);
 }
 
-bool breadth_first_search(Tree *tree, int value) {
+bool breadth_first_search(Tree *tree, int value)
+{
   if (!tree || !tree->head)
     return false;
 
@@ -117,7 +131,8 @@ bool breadth_first_search(Tree *tree, int value) {
   return breadth_first_search_walk(tree->head, value, q);
 }
 
-bool tree_compare_walk(TreeNode *a, TreeNode *b) {
+bool tree_compare_walk(TreeNode *a, TreeNode *b)
+{
   // Structural Check
   if (!a && !b)
     return true;
@@ -134,7 +149,8 @@ bool tree_compare_walk(TreeNode *a, TreeNode *b) {
          tree_compare_walk(a->right, b->right);
 }
 
-bool tree_compare(Tree *a, Tree *b) {
+bool tree_compare(Tree *a, Tree *b)
+{
   if (!a && !b)
     return true;
 
@@ -144,7 +160,8 @@ bool tree_compare(Tree *a, Tree *b) {
   return tree_compare_walk(a->head, b->head);
 }
 
-bool bst_find_walk(TreeNode *node, int needle) {
+bool bst_find_walk(TreeNode *node, int needle)
+{
   if (!node)
     return false;
 
@@ -157,36 +174,50 @@ bool bst_find_walk(TreeNode *node, int needle) {
   return bst_find_walk(node->left, needle);
 }
 
-bool bst_find(Tree *tree, int needle) {
+bool bst_find(Tree *tree, int needle)
+{
   if (!tree || !tree->head)
     return false;
 
   return bst_find_walk(tree->head, needle);
 }
 
-void bst_insert_walk(TreeNode *node, int value) {
-  if (!node) {
+void bst_insert_walk(TreeNode *node, int value)
+{
+  if (!node)
+  {
     node = tree_node_new(value);
     return;
   }
 
-  if (node->value < value) {
-    if (!node->right) {
+  if (node->value < value)
+  {
+    if (!node->right)
+    {
       node->right = tree_node_new(value);
-    } else {
+    }
+    else
+    {
       bst_insert_walk(node->right, value);
     }
-  } else {
-    if (!node->left) {
+  }
+  else
+  {
+    if (!node->left)
+    {
       node->left = tree_node_new(value);
-    } else {
+    }
+    else
+    {
       bst_insert_walk(node->left, value);
     }
   }
 }
 
-void bst_insert(Tree *tree, int value) {
-  if (!tree->head) {
+void bst_insert(Tree *tree, int value)
+{
+  if (!tree->head)
+  {
     tree->head = tree_node_new(value);
     tree->height++;
     return;

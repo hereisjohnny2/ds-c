@@ -7,12 +7,19 @@ This repository contemplates implementations form the most common data structure
 I am using the premake5 tool to create the build systems for different operating systems. In the case of a GNU/Linux environment it will create a Makefile to compile in debug mode with the following commands:
 
 ```shell
-$ premake5 gmake
+$ tools/premake/premake5 gmake
 $ make
 ```
 
 So far there are no script to run the tests automatically, but you can run then with:
 
 ```shell
-$ bin/Debug/dsc-tests
+$ tools/tests.sh
 ```
+
+To remove all make files and clean bin and obj folders run:
+
+```shell
+$ tools/clean.sh
+```
+

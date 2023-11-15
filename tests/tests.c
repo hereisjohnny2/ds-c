@@ -1,14 +1,14 @@
 #include "tests.h"
 
-#include "../algo/path_finding.h"
-#include "../algo/search.h"
-#include "../algo/sort.h"
-#include "../ds/linked_list.h"
-#include "../ds/queue.h"
-#include "../ds/stack.h"
-#include "../ds/tree.h"
+#include "algo/path_finding.h"
+#include "algo/search.h"
+#include "algo/sort.h"
+#include "ds/linked_list.h"
+#include "ds/queue.h"
+#include "ds/stack.h"
+#include "ds/tree.h"
 
-#include "../algo/array_utils.h"
+#include "algo/array_utils.h"
 #include "test_utils.h"
 
 #include <stdio.h>
@@ -95,7 +95,7 @@ void test_queue()
 
 void test_path_finding()
 {
-  printf("Maze Solver in C\n");
+  printf("Maze Solver in C");
 
   int maze_rows = 6, maze_columns = 12;
 

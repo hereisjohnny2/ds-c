@@ -5,9 +5,10 @@ project "dsc-lib"
     kind "SharedLib"
     language "C"
     targetdir "bin/%{cfg.buildcfg}"
+    
+    files { "src/**.c", "include/**.h"  }
 
-    files { "./src/ds/**.h", "./src/ds/**.c",
-            "./src/algo/**.h", "./src/algo/**.c" }
+    includedirs { "include" }
 
     filter "configurations:Debug"
         defines { "DEBUG" }
@@ -21,9 +22,11 @@ project "dsc-tests"
     kind "ConsoleApp"
     language "C"
     targetdir "bin/%{cfg.buildcfg}"
-    links { "dsc-lib" }
 
-    files { "./src/tests/**.h", "./src/tests/**.c" }
+    links { "dsc-lib" }
+    includedirs { "include" }
+
+    files { "tests/**.h", "tests/**.c" }
 
     filter "configurations:Debug"
         defines { "DEBUG" }

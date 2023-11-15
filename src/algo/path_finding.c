@@ -1,4 +1,4 @@
-#include "path_finding.h"
+#include "algo/path_finding.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,12 +11,18 @@ Point directions[] = {
 };
 
 void print_maze(size_t maze_rows, size_t maze_columns, char **maze,
-                bool **path) {
-  for (int i = 0; i < maze_rows; i++) {
-    for (int j = 0; j < maze_columns; j++) {
-      if (path == NULL) {
+                bool **path)
+{
+  for (int i = 0; i < maze_rows; i++)
+  {
+    for (int j = 0; j < maze_columns; j++)
+    {
+      if (path == NULL)
+      {
         printf("%c", maze[i][j]);
-      } else {
+      }
+      else
+      {
         printf("%c", path[i][j] ? '1' : maze[i][j]);
       }
     }
@@ -25,26 +31,31 @@ void print_maze(size_t maze_rows, size_t maze_columns, char **maze,
 }
 
 bool walk(size_t maze_rows, size_t maze_columns, char **maze, char wall,
-          bool **seen, Point curr, Point end, bool **path) {
+          bool **seen, Point curr, Point end, bool **path)
+{
   // 1. Off the map
   if (curr.x < 0 || curr.x >= maze_columns || curr.y < 0 ||
-      curr.y >= maze_rows) {
+      curr.y >= maze_rows)
+  {
     return false;
   }
 
   // 2. Hit a wall
-  if (maze[curr.y][curr.x] == wall) {
+  if (maze[curr.y][curr.x] == wall)
+  {
     return false;
   }
 
   // 3. End point found
-  if (curr.x == end.x && curr.y == end.y) {
+  if (curr.x == end.x && curr.y == end.y)
+  {
     path[curr.y][curr.x] = 1;
     return true;
   }
 
   // 4. Have already seen
-  if (seen[curr.y][curr.x]) {
+  if (seen[curr.y][curr.x])
+  {
     return false;
   }
 
@@ -52,12 +63,14 @@ bool walk(size_t maze_rows, size_t maze_columns, char **maze, char wall,
   seen[curr.y][curr.x] = true;
   path[curr.y][curr.x] = true;
   // Recurse
-  for (int i = 0; i < 4; i++) {
+  for (int i = 0; i < 4; i++)
+  {
     Point new_curr = {
         .x = directions[i].x + curr.x,
         .y = directions[i].y + curr.y,
     };
-    if (walk(maze_rows, maze_columns, maze, wall, seen, new_curr, end, path)) {
+    if (walk(maze_rows, maze_columns, maze, wall, seen, new_curr, end, path))
+    {
       return true;
     }
   }
@@ -67,24 +80,29 @@ bool walk(size_t maze_rows, size_t maze_columns, char **maze, char wall,
   return false;
 }
 
-bool **alloc_bool_2darray(size_t rows, size_t cols) {
+bool **alloc_bool_2darray(size_t rows, size_t cols)
+{
   bool **arr = (bool **)malloc(rows * sizeof(bool *));
-  for (int i = 0; i < rows; i++) {
+  for (int i = 0; i < rows; i++)
+  {
     arr[i] = (bool *)malloc(rows * sizeof(bool));
   }
 
   return arr;
 }
 
-void free_bool_2darray(size_t rows, bool **arr) {
-  for (int i = 0; i < rows; i++) {
+void free_bool_2darray(size_t rows, bool **arr)
+{
+  for (int i = 0; i < rows; i++)
+  {
     free(arr[i]);
   }
   free(arr);
 }
 
 bool **maze_solver(size_t maze_rows, size_t maze_columns, char **maze, char wall,
-                 Point start, Point end) {
+                   Point start, Point end)
+{
 
   bool **seen = alloc_bool_2darray(maze_rows, maze_columns);
   bool **path = alloc_bool_2darray(maze_rows, maze_columns);
